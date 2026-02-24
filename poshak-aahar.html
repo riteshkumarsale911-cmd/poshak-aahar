@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poshak Aahar – Nutrition & Dietitian</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sage: #7B9E6B;
+    --deep-green: #2D4A2D;
+    --gold: #C8963E;
+    --cream: #FAF6EE;
+    --warm-white: #FFFDF8;
+    --clay: #8B5E3C;
+    --light-sage: #D4E6C3;
+    --text-dark: #1E2D1E;
+    --text-mid: #4A5E4A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 1000;
+    background: rgba(255,253,248,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(123,158,107,0.2);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 70px;
+    transition: all 0.3s;
+  }
+  nav.scrolled { box-shadow: 0 4px 30px rgba(45,74,45,0.1); }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--deep-green);
+    text-decoration: none;
+    display: flex; flex-direction: column; line-height: 1;
+  }
+  .nav-logo span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--text-mid);
+    font-size: 0.85rem; letter-spacing: 0.5px;
+    font-weight: 500; text-transform: uppercase;
+    position: relative; padding-bottom: 3px;
+    transition: color 0.3s;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 1.5px; background: var(--gold);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--deep-green); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    background: var(--deep-green); color: var(--cream) !important;
+    padding: 0.5rem 1.2rem !important; border-radius: 2px;
+    transition: background 0.3s !important;
+  }
+  .nav-cta:hover { background: var(--sage) !important; }
+  .nav-cta::after { display: none !important; }
+
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    cursor: pointer; padding: 5px;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: var(--deep-green); transition: all 0.3s;
+  }
+
+  /* HERO */
+  #home {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 100px 5% 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: 
+      radial-gradient(ellipse at 70% 40%, rgba(123,158,107,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(200,150,62,0.08) 0%, transparent 50%),
+      var(--warm-white);
+  }
+  .hero-pattern {
+    position: absolute; right: 0; top: 0; bottom: 0; width: 45%;
+    background: 
+      linear-gradient(135deg, var(--light-sage) 0%, rgba(123,158,107,0.3) 100%);
+    clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+    opacity: 0.4;
+  }
+  .hero-circles {
+    position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+    width: 380px; height: 380px;
+  }
+  .hero-circles::before, .hero-circles::after {
+    content: ''; position: absolute; border-radius: 50%;
+    border: 1.5px solid rgba(123,158,107,0.3);
+  }
+  .hero-circles::before { inset: 0; animation: rotate 20s linear infinite; }
+  .hero-circles::after { inset: 30px; animation: rotate 15s linear infinite reverse; border-color: rgba(200,150,62,0.25); }
+
+  .leaf-decor {
+    position: absolute; font-size: 6rem; opacity: 0.07;
+    color: var(--deep-green);
+  }
+  .leaf-decor.l1 { top: 10%; left: 5%; transform: rotate(-30deg); animation: float 6s ease-in-out infinite; }
+  .leaf-decor.l2 { bottom: 15%; right: 8%; transform: rotate(20deg); animation: float 8s ease-in-out infinite 2s; }
+  .leaf-decor.l3 { top: 50%; left: 2%; transform: rotate(10deg); animation: float 7s ease-in-out infinite 1s; }
+
+  @keyframes float { 0%,100%{transform:translateY(0) rotate(-30deg)} 50%{transform:translateY(-15px) rotate(-30deg)} }
+  @keyframes rotate { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 600px;
+    animation: fadeUp 1s ease both;
+  }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(123,158,107,0.15);
+    border: 1px solid rgba(123,158,107,0.4);
+    padding: 6px 14px; border-radius: 20px;
+    font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--sage); font-weight: 500; margin-bottom: 1.5rem;
+  }
+  .hero-badge::before { content: '✦'; font-size: 0.6rem; }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 1.1;
+    color: var(--deep-green);
+    margin-bottom: 0.5rem;
+  }
+  .hero-title em {
+    font-style: italic; color: var(--gold);
+    display: block;
+  }
+
+  .sanskrit-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    color: var(--clay);
+    margin: 1rem 0 0.4rem;
+    font-weight: 300; letter-spacing: 1px;
+  }
+  .tagline-meaning {
+    font-size: 0.78rem; color: var(--text-mid); letter-spacing: 1px;
+    font-style: italic; margin-bottom: 1.5rem;
+    opacity: 0.8;
+  }
+
+  .hero-desc {
+    font-size: 1rem; color: var(--text-mid);
+    line-height: 1.8; margin-bottom: 2.5rem;
+    max-width: 480px;
+  }
+
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--deep-green); color: var(--cream);
+    padding: 14px 28px; border-radius: 3px;
+    text-decoration: none; font-weight: 500;
+    font-size: 0.9rem; letter-spacing: 0.5px;
+    transition: all 0.3s; border: 2px solid var(--deep-green);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: transparent; color: var(--deep-green); }
+  .btn-secondary {
+    background: transparent; color: var(--deep-green);
+    padding: 14px 28px; border-radius: 3px;
+    text-decoration: none; font-weight: 500;
+    font-size: 0.9rem; letter-spacing: 0.5px;
+    transition: all 0.3s; border: 2px solid var(--sage);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-secondary:hover { background: var(--light-sage); }
+
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3rem; flex-wrap: wrap;
+  }
+  .stat-item { display: flex; flex-direction: column; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; color: var(--deep-green); font-weight: 700;
+    line-height: 1;
+  }
+  .stat-label { font-size: 0.75rem; color: var(--text-mid); letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
+
+  /* SECTION STYLES */
+  section { padding: 80px 5%; }
+  .section-tag {
+    display: inline-block; font-size: 0.7rem; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--gold); font-weight: 600;
+    margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--deep-green); line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .section-sub {
+    color: var(--text-mid); font-size: 1rem; line-height: 1.8;
+    max-width: 550px;
+  }
+  .divider {
+    width: 50px; height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    margin: 1.5rem 0;
+  }
+
+  /* ABOUT */
+  #about { background: var(--cream); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: center; margin-top: 3rem;
+  }
+  .about-img-wrap {
+    position: relative;
+  }
+  .about-img-placeholder {
+    width: 100%; aspect-ratio: 3/4;
+    background: linear-gradient(145deg, var(--light-sage), rgba(123,158,107,0.4));
+    border-radius: 4px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .about-img-placeholder::before {
+    content: '🌿'; font-size: 5rem; opacity: 0.3;
+  }
+  .about-img-placeholder .img-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; color: var(--deep-green); opacity: 0.6;
+    margin-top: 1rem; font-style: italic;
+  }
+  .about-badge-wrap {
+    position: absolute; bottom: -20px; right: -20px;
+    background: var(--deep-green); color: var(--cream);
+    padding: 20px; border-radius: 3px;
+    text-align: center; min-width: 130px;
+  }
+  .about-badge-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem; font-weight: 700; line-height: 1;
+    color: var(--gold);
+  }
+  .about-badge-text { font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
+
+  .about-text { padding-left: 1rem; }
+  .about-points { margin: 2rem 0; display: grid; gap: 1rem; }
+  .about-point {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 1rem; border-left: 3px solid transparent;
+    transition: all 0.3s; border-radius: 0 4px 4px 0;
+  }
+  .about-point:hover { border-color: var(--sage); background: rgba(123,158,107,0.06); }
+  .about-point-icon {
+    width: 38px; height: 38px; background: var(--light-sage);
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-size: 1.1rem; flex-shrink: 0;
+  }
+  .about-point h4 {
+    font-size: 0.9rem; font-weight: 600; color: var(--deep-green); margin-bottom: 3px;
+  }
+  .about-point p { font-size: 0.82rem; color: var(--text-mid); line-height: 1.6; }
+
+  /* BLOG */
+  #blog { background: var(--warm-white); }
+  .blog-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem; }
+  .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+  .blog-card {
+    background: var(--cream); border-radius: 4px; overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid rgba(123,158,107,0.15);
+  }
+  .blog-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(45,74,45,0.12); }
+  .blog-img {
+    height: 180px; display: flex; align-items: center; justify-content: center;
+    font-size: 3rem; position: relative; overflow: hidden;
+  }
+  .blog-img.bg1 { background: linear-gradient(135deg, #d4e6c3, #a8c990); }
+  .blog-img.bg2 { background: linear-gradient(135deg, #f0e0c8, #d4a06a); }
+  .blog-img.bg3 { background: linear-gradient(135deg, #c8d8e0, #89afc0); }
+  .blog-body { padding: 1.5rem; }
+  .blog-cat {
+    font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold); font-weight: 600; margin-bottom: 0.5rem;
+  }
+  .blog-body h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; color: var(--deep-green); margin-bottom: 0.6rem; line-height: 1.4;
+  }
+  .blog-body p { font-size: 0.83rem; color: var(--text-mid); line-height: 1.7; margin-bottom: 1rem; }
+  .blog-footer { display: flex; justify-content: space-between; align-items: center; }
+  .blog-date { font-size: 0.75rem; color: var(--text-mid); opacity: 0.7; }
+  .blog-link {
+    font-size: 0.8rem; color: var(--sage); font-weight: 600;
+    text-decoration: none; letter-spacing: 0.5px;
+    transition: color 0.3s;
+  }
+  .blog-link:hover { color: var(--deep-green); }
+
+  /* FEEDBACK */
+  #feedback {
+    background: linear-gradient(160deg, var(--deep-green) 0%, #1a3020 100%);
+    color: var(--cream);
+    position: relative; overflow: hidden;
+  }
+  #feedback::before {
+    content: ''; position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%237b9e6b' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .feedback-inner { position: relative; z-index: 1; }
+  .feedback-top { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; margin-top: 3rem; }
+  
+  /* Reviews */
+  .reviews-grid { display: grid; gap: 1.5rem; }
+  .review-card {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    padding: 1.5rem; border-radius: 4px; backdrop-filter: blur(10px);
+    transition: all 0.3s;
+  }
+  .review-card:hover { background: rgba(255,255,255,0.1); }
+  .stars { color: var(--gold); font-size: 0.9rem; margin-bottom: 0.8rem; }
+  .review-text { font-size: 0.9rem; line-height: 1.8; color: rgba(255,253,248,0.85); margin-bottom: 1rem; font-style: italic; font-family: 'Cormorant Garamond', serif; font-size: 1rem; }
+  .reviewer { display: flex; align-items: center; gap: 10px; }
+  .reviewer-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--sage); display: flex; align-items: center;
+    justify-content: center; font-weight: 600; font-size: 0.8rem;
+    color: var(--cream);
+  }
+  .reviewer-info { display: flex; flex-direction: column; }
+  .reviewer-name { font-size: 0.85rem; font-weight: 600; color: var(--cream); }
+  .reviewer-loc { font-size: 0.72rem; color: rgba(255,253,248,0.5); }
+
+  /* Feedback Form */
+  .feedback-form { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 2rem; border-radius: 4px; }
+  .feedback-form h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--cream); }
+  .feedback-form p { font-size: 0.85rem; color: rgba(255,253,248,0.6); margin-bottom: 1.5rem; }
+  .star-select { display: flex; gap: 6px; margin-bottom: 1.5rem; }
+  .star-select label { cursor: pointer; font-size: 1.5rem; color: rgba(255,255,255,0.3); transition: color 0.2s; }
+  .star-select input { display: none; }
+  .star-select label:hover,
+  .star-select label:hover ~ label { color: var(--gold); }
+  .star-select input:checked ~ label { color: var(--gold); }
+  .form-group { margin-bottom: 1rem; }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15); border-radius: 3px;
+    padding: 12px 14px; color: var(--cream); font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem; outline: none; transition: border-color 0.3s;
+    resize: vertical;
+  }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,253,248,0.35); }
+  .form-group input:focus, .form-group textarea:focus { border-color: var(--sage); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .btn-submit {
+    width: 100%; padding: 13px; background: var(--gold);
+    border: none; border-radius: 3px; color: var(--deep-green);
+    font-weight: 600; font-size: 0.9rem; cursor: pointer;
+    letter-spacing: 0.5px; transition: all 0.3s; margin-top: 0.5rem;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-submit:hover { background: var(--cream); }
+
+  /* BOOK APPOINTMENT */
+  #appointment { background: var(--cream); }
+  .appt-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 4rem; align-items: start; margin-top: 3rem; }
+  .appt-info { }
+  .appt-features { display: grid; gap: 1.2rem; margin-top: 2rem; }
+  .appt-feature {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.2rem; background: var(--warm-white);
+    border-radius: 4px; border-left: 3px solid var(--sage);
+  }
+  .appt-feature-icon { font-size: 1.3rem; }
+  .appt-feature h4 { font-size: 0.88rem; font-weight: 600; color: var(--deep-green); margin-bottom: 2px; }
+  .appt-feature p { font-size: 0.78rem; color: var(--text-mid); }
+
+  .appt-form {
+    background: var(--deep-green); padding: 2.5rem;
+    border-radius: 4px; color: var(--cream);
+  }
+  .appt-form h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; margin-bottom: 0.4rem;
+  }
+  .appt-form > p { font-size: 0.83rem; color: rgba(255,253,248,0.6); margin-bottom: 1.8rem; }
+  .appt-form .form-group label {
+    display: block; font-size: 0.75rem; letter-spacing: 1px;
+    text-transform: uppercase; color: rgba(255,253,248,0.6);
+    margin-bottom: 6px; font-weight: 500;
+  }
+  .appt-form input, .appt-form select, .appt-form textarea {
+    width: 100%; background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15); border-radius: 3px;
+    padding: 12px 14px; color: var(--cream); font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem; outline: none; transition: border-color 0.3s;
+  }
+  .appt-form select option { background: var(--deep-green); }
+  .appt-form input::placeholder { color: rgba(255,253,248,0.3); }
+  .appt-form input:focus, .appt-form select:focus, .appt-form textarea:focus { border-color: var(--gold); }
+  .appt-form .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .btn-book {
+    width: 100%; padding: 14px; background: var(--gold);
+    border: none; border-radius: 3px; color: var(--deep-green);
+    font-weight: 700; font-size: 0.95rem; cursor: pointer;
+    letter-spacing: 0.5px; transition: all 0.3s;
+    font-family: 'DM Sans', sans-serif; margin-top: 0.8rem;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .btn-book:hover { background: var(--cream); transform: translateY(-2px); }
+
+  .success-msg {
+    display: none; background: rgba(123,158,107,0.2); border: 1px solid var(--sage);
+    padding: 12px; border-radius: 3px; text-align: center;
+    font-size: 0.85rem; color: var(--light-sage); margin-top: 1rem;
+  }
+
+  /* FOOTER */
+  footer {
+    background: #111d11; color: rgba(255,253,248,0.6);
+    padding: 50px 5% 30px;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+  }
+  .footer-brand .nav-logo { color: var(--cream); font-size: 1.3rem; margin-bottom: 1rem; display: inline-flex; }
+  .footer-brand p { font-size: 0.82rem; line-height: 1.8; max-width: 220px; }
+  .footer-col h4 {
+    font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold); font-weight: 600; margin-bottom: 1.2rem;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .footer-col ul a { color: rgba(255,253,248,0.55); text-decoration: none; font-size: 0.83rem; transition: color 0.3s; }
+  .footer-col ul a:hover { color: var(--cream); }
+  .footer-bottom {
+    background: #0d150d; padding: 18px 5%;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.75rem; color: rgba(255,253,248,0.35); flex-wrap: wrap; gap: 1rem;
+  }
+  .social-links { display: flex; gap: 12px; }
+  .social-link {
+    width: 34px; height: 34px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,253,248,0.5); text-decoration: none; font-size: 0.8rem;
+    transition: all 0.3s;
+  }
+  .social-link:hover { border-color: var(--sage); color: var(--sage); }
+
+  /* MOBILE NAV */
+  .mobile-menu {
+    display: none; position: fixed; top: 70px; left: 0; right: 0;
+    background: var(--warm-white); z-index: 999; padding: 1.5rem 5%;
+    border-bottom: 1px solid rgba(123,158,107,0.2);
+    flex-direction: column; gap: 1rem;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    text-decoration: none; color: var(--text-mid);
+    font-size: 1rem; padding: 8px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05); font-weight: 500;
+  }
+
+  /* SCROLL ANIMATIONS */
+  .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .about-grid, .feedback-top, .appt-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .hero-circles { display: none; }
+    footer { grid-template-columns: 1fr 1fr; }
+    .about-badge-wrap { right: 0; }
+  }
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    footer { grid-template-columns: 1fr; }
+    .form-row, .appt-form .form-row { grid-template-columns: 1fr; }
+    section { padding: 60px 5%; }
+    .hero-stats { gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#home" class="nav-logo">
+    Poshak Aahar
+    <span>Dietitian & Nutrition</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="#feedback">Feedback</a></li>
+    <li><a href="#appointment" class="nav-cta">Book Appointment</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home" onclick="toggleMenu()">Home</a>
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#blog" onclick="toggleMenu()">Blog</a>
+  <a href="#feedback" onclick="toggleMenu()">Feedback</a>
+  <a href="#appointment" onclick="toggleMenu()">Book Appointment</a>
+</div>
+
+<!-- HOME -->
+<section id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-circles"></div>
+  <div class="leaf-decor l1">🍃</div>
+  <div class="leaf-decor l2">🌿</div>
+  <div class="leaf-decor l3">🍀</div>
+
+  <div class="hero-content">
+    <div class="hero-badge">Certified Dietitian & Nutritionist</div>
+    <h1 class="hero-title">
+      Nourish Your<br>
+      <em>True Self</em>
+    </h1>
+    <p class="sanskrit-tagline">✦ आहारेण विजयते जीवनम् ✦</p>
+    <p class="tagline-meaning">"Life is conquered through the right nourishment"</p>
+    <p class="hero-desc">
+      Welcome to Poshak Aahar — where ancient nutritional wisdom meets modern science. 
+      Transform your health with personalized diet plans rooted in balance, nature, and your unique body.
+    </p>
+    <div class="hero-btns">
+      <a href="#appointment" class="btn-primary">Book Consultation →</a>
+      <a href="#about" class="btn-secondary">Learn More</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">500+</span>
+        <span class="stat-label">Happy Clients</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">8+</span>
+        <span class="stat-label">Years Experience</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">98%</span>
+        <span class="stat-label">Success Rate</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-img-wrap reveal">
+      <div class="about-img-placeholder">
+        <div class="img-text">Your Photo Here</div>
+      </div>
+      <div class="about-badge-wrap">
+        <div class="about-badge-num">8+</div>
+        <div class="about-badge-text">Years of<br>Practice</div>
+      </div>
+    </div>
+    <div class="about-text">
+      <span class="section-tag">About Me</span>
+      <h2 class="section-title reveal">Holistic Nutrition<br>from the Heart</h2>
+      <div class="divider"></div>
+      <p class="section-sub reveal">
+        I'm a certified dietitian with a deep belief that food is medicine. 
+        My approach blends the ancient Indian science of Ayurvedic nutrition with evidence-based modern dietetics — 
+        creating plans that heal from within.
+      </p>
+      <div class="about-points">
+        <div class="about-point reveal reveal-delay-1">
+          <div class="about-point-icon">🎓</div>
+          <div>
+            <h4>M.Sc. Nutrition & Dietetics</h4>
+            <p>Specialized training in clinical nutrition, sports dietetics, and therapeutic meal planning.</p>
+          </div>
+        </div>
+        <div class="about-point reveal reveal-delay-2">
+          <div class="about-point-icon">🌿</div>
+          <div>
+            <h4>Ayurveda-Integrated Approach</h4>
+            <p>Combining traditional Indian nutritional wisdom with modern nutritional science.</p>
+          </div>
+        </div>
+        <div class="about-point reveal reveal-delay-3">
+          <div class="about-point-icon">🏆</div>
+          <div>
+            <h4>Certified by NIN & IDA</h4>
+            <p>Registered with National Institute of Nutrition and Indian Dietetic Association.</p>
+          </div>
+        </div>
+      </div>
+      <a href="#appointment" class="btn-primary" style="margin-top:1rem; text-decoration:none; display:inline-flex">Consult Today →</a>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog">
+  <div class="blog-header">
+    <div>
+      <span class="section-tag">Nutrition Knowledge</span>
+      <h2 class="section-title reveal">Latest from the Blog</h2>
+    </div>
+    <a href="#" class="btn-secondary" style="white-space:nowrap">View All Posts</a>
+  </div>
+  <div class="blog-grid">
+    <div class="blog-card reveal">
+      <div class="blog-img bg1">🥗</div>
+      <div class="blog-body">
+        <div class="blog-cat">Weight Management</div>
+        <h3>The Sattvic Diet: Ancient Wisdom for Modern Weight Loss</h3>
+        <p>Discover how Ayurvedic principles of eating can help you achieve sustainable weight loss without restrictive dieting or calorie counting.</p>
+        <div class="blog-footer">
+          <span class="blog-date">Feb 15, 2025</span>
+          <a href="#" class="blog-link">Read More →</a>
+        </div>
+      </div>
+    </div>
+    <div class="blog-card reveal reveal-delay-1">
+      <div class="blog-img bg2">🌾</div>
+      <div class="blog-body">
+        <div class="blog-cat">Gut Health</div>
+        <h3>Why Your Gut is Your Second Brain: A Nutrition Guide</h3>
+        <p>The gut-brain axis is transforming how we understand mood, immunity, and overall health. Learn which foods cultivate a thriving gut microbiome.</p>
+        <div class="blog-footer">
+          <span class="blog-date">Feb 8, 2025</span>
+          <a href="#" class="blog-link">Read More →</a>
+        </div>
+      </div>
+    </div>
+    <div class="blog-card reveal reveal-delay-2">
+      <div class="blog-img bg3">💧</div>
+      <div class="blog-body">
+        <div class="blog-cat">Hydration</div>
+        <h3>Beyond 8 Glasses: The Truth About Hydration and Nutrition</h3>
+        <p>Most hydration advice is oversimplified. Learn how your food choices, activity level, and climate all play a role in your optimal fluid intake.</p>
+        <div class="blog-footer">
+          <span class="blog-date">Jan 28, 2025</span>
+          <a href="#" class="blog-link">Read More →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEEDBACK -->
+<section id="feedback">
+  <div class="feedback-inner">
+    <span class="section-tag" style="color:var(--gold)">Testimonials & Reviews</span>
+    <h2 class="section-title reveal" style="color:var(--cream)">What Our Clients Say</h2>
+    <div class="divider"></div>
+    <div class="feedback-top">
+      <div class="reviews-grid">
+        <div class="review-card reveal">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"Poshak Aahar changed my life completely. After struggling with PCOS for years, the personalized nutrition plan helped me feel normal again. I lost 12 kg in 4 months — naturally!"</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar">PR</div>
+            <div class="reviewer-info">
+              <span class="reviewer-name">Priya Rajshekhar</span>
+              <span class="reviewer-loc">Pune, Maharashtra</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card reveal reveal-delay-1">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"As a diabetic, I was skeptical about seeing a dietitian again. But this approach is so different — it's rooted in our culture, uses real Indian foods, and actually works. My HbA1c is now in control."</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar">AM</div>
+            <div class="reviewer-info">
+              <span class="reviewer-name">Anil Maheshwari</span>
+              <span class="reviewer-loc">Nagpur, Maharashtra</span>
+            </div>
+          </div>
+        </div>
+        <div class="review-card reveal reveal-delay-2">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"The online consultation process is seamless. Clear plan, easy to follow, and incredible results. Highly recommend for anyone wanting a holistic, sustainable approach to health."</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar">SK</div>
+            <div class="reviewer-info">
+              <span class="reviewer-name">Sunita Kulkarni</span>
+              <span class="reviewer-loc">Mumbai, Maharashtra</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feedback-form reveal">
+        <h3>Share Your Experience</h3>
+        <p>Your feedback helps us improve and helps others find the right guidance.</p>
+        <div class="form-group">
+          <label style="display:block;font-size:0.75rem;letter-spacing:1px;text-transform:uppercase;color:rgba(255,253,248,0.6);margin-bottom:8px;">Your Rating</label>
+          <div class="star-select" id="starSelect">
+            <input type="radio" name="rating" id="s5" value="5"><label for="s5" onclick="setStars(5)">★</label>
+            <input type="radio" name="rating" id="s4" value="4"><label for="s4" onclick="setStars(4)">★</label>
+            <input type="radio" name="rating" id="s3" value="3"><label for="s3" onclick="setStars(3)">★</label>
+            <input type="radio" name="rating" id="s2" value="2"><label for="s2" onclick="setStars(2)">★</label>
+            <input type="radio" name="rating" id="s1" value="1"><label for="s1" onclick="setStars(1)">★</label>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <input type="text" placeholder="Your Name">
+          </div>
+          <div class="form-group">
+            <input type="email" placeholder="Email Address">
+          </div>
+        </div>
+        <div class="form-group">
+          <textarea rows="4" placeholder="Share your experience with Poshak Aahar..."></textarea>
+        </div>
+        <button class="btn-submit" onclick="submitFeedback(this)">Submit Feedback ✦</button>
+        <div class="success-msg" id="feedbackSuccess">🌿 Thank you! Your feedback has been received.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOK APPOINTMENT -->
+<section id="appointment">
+  <span class="section-tag">Book a Session</span>
+  <h2 class="section-title reveal">Start Your Wellness Journey</h2>
+  <div class="appt-grid">
+    <div class="appt-info">
+      <div class="divider"></div>
+      <p class="section-sub reveal">
+        Take the first step toward a healthier, more vibrant life. Book your personalized consultation and receive a custom nutrition plan designed just for you.
+      </p>
+      <div class="appt-features">
+        <div class="appt-feature reveal reveal-delay-1">
+          <div class="appt-feature-icon">🩺</div>
+          <div>
+            <h4>Initial Health Assessment</h4>
+            <p>Comprehensive body composition, health history & goal analysis</p>
+          </div>
+        </div>
+        <div class="appt-feature reveal reveal-delay-2">
+          <div class="appt-feature-icon">📋</div>
+          <div>
+            <h4>Personalized Diet Plan</h4>
+            <p>Custom meal plan based on your goals, lifestyle & food preferences</p>
+          </div>
+        </div>
+        <div class="appt-feature reveal reveal-delay-3">
+          <div class="appt-feature-icon">📞</div>
+          <div>
+            <h4>Follow-up Support</h4>
+            <p>Ongoing WhatsApp/call support and monthly progress tracking</p>
+          </div>
+        </div>
+        <div class="appt-feature reveal">
+          <div class="appt-feature-icon">🌐</div>
+          <div>
+            <h4>Online & In-Person</h4>
+            <p>Available via video call for clients across India and worldwide</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="appt-form reveal">
+      <h3>Book Your Consultation</h3>
+      <p>Fill in the details below and we'll confirm your appointment within 24 hours.</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Full Name *</label>
+          <input type="text" placeholder="Your full name" id="apptName">
+        </div>
+        <div class="form-group">
+          <label>Phone Number *</label>
+          <input type="tel" placeholder="+91 00000 00000" id="apptPhone">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="your@email.com" id="apptEmail">
+        </div>
+        <div class="form-group">
+          <label>Age</label>
+          <input type="number" placeholder="Your age" id="apptAge">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Preferred Date *</label>
+          <input type="date" id="apptDate">
+        </div>
+        <div class="form-group">
+          <label>Consultation Mode</label>
+          <select id="apptMode">
+            <option value="">Select mode</option>
+            <option>Online (Video Call)</option>
+            <option>In-Person (Clinic)</option>
+            <option>Phone Consultation</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Health Concern</label>
+        <select id="apptConcern">
+          <option value="">Select your primary concern</option>
+          <option>Weight Loss</option>
+          <option>Weight Gain</option>
+          <option>Diabetes Management</option>
+          <option>PCOS / Hormonal Health</option>
+          <option>Thyroid</option>
+          <option>Sports Nutrition</option>
+          <option>Gut Health</option>
+          <option>General Wellness</option>
+          <option>Child Nutrition</option>
+          <option>Pregnancy Nutrition</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Additional Notes</label>
+        <textarea rows="3" placeholder="Any specific concerns or questions..."></textarea>
+      </div>
+      <button class="btn-book" onclick="bookAppointment(this)">
+        Confirm Appointment 🌿
+      </button>
+      <div class="success-msg" id="apptSuccess">
+        ✅ Your appointment request has been received! We'll confirm via WhatsApp within 24 hours.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <a href="#home" class="nav-logo" style="margin-bottom:1rem;display:inline-block">
+      Poshak Aahar
+      <span>Dietitian & Nutrition</span>
+    </a>
+    <p>Guiding you toward balanced, nourishing health through the wisdom of food — ancient roots, modern science.</p>
+    <div class="social-links" style="margin-top:1.5rem">
+      <a href="#" class="social-link">in</a>
+      <a href="#" class="social-link">ig</a>
+      <a href="#" class="social-link">yt</a>
+      <a href="#" class="social-link">wa</a>
+    </div>
+  </div>
+  <div class="footer-col">
+    <h4>Navigation</h4>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#blog">Blog</a></li>
+      <li><a href="#feedback">Reviews</a></li>
+      <li><a href="#appointment">Book Appointment</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Services</h4>
+    <ul>
+      <li><a href="#">Weight Management</a></li>
+      <li><a href="#">Diabetes Diet</a></li>
+      <li><a href="#">PCOS Nutrition</a></li>
+      <li><a href="#">Sports Nutrition</a></li>
+      <li><a href="#">Child Nutrition</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Contact</h4>
+    <ul>
+      <li><a href="#">📍 Nagpur, Maharashtra</a></li>
+      <li><a href="#">📞 +91 XXXXX XXXXX</a></li>
+      <li><a href="#">✉️ hello@poshakaahar.in</a></li>
+      <li><a href="#">🕐 Mon–Sat, 9am–6pm</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span>© 2025 Poshak Aahar. All rights reserved.</span>
+  <span>आहारेण विजयते जीवनम् ✦</span>
+</div>
+
+<script>
+  // NAV SCROLL
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // MOBILE MENU
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // SCROLL REVEAL
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+
+  // STAR RATING
+  let selectedStars = 0;
+  function setStars(n) {
+    selectedStars = n;
+    const labels = document.querySelectorAll('#starSelect label');
+    labels.forEach((l, i) => {
+      l.style.color = (5 - i) <= n ? 'var(--gold)' : 'rgba(255,255,255,0.3)';
+    });
+  }
+
+  // FEEDBACK SUBMIT
+  function submitFeedback(btn) {
+    btn.textContent = 'Submitting...';
+    setTimeout(() => {
+      btn.textContent = 'Submit Feedback ✦';
+      document.getElementById('feedbackSuccess').style.display = 'block';
+      setTimeout(() => document.getElementById('feedbackSuccess').style.display = 'none', 4000);
+    }, 1200);
+  }
+
+  // APPOINTMENT SUBMIT
+  function bookAppointment(btn) {
+    const name = document.getElementById('apptName').value;
+    const phone = document.getElementById('apptPhone').value;
+    if (!name || !phone) {
+      alert('Please fill in your name and phone number.');
+      return;
+    }
+    btn.textContent = 'Booking...';
+    setTimeout(() => {
+      btn.innerHTML = 'Confirm Appointment 🌿';
+      document.getElementById('apptSuccess').style.display = 'block';
+      setTimeout(() => document.getElementById('apptSuccess').style.display = 'none', 5000);
+    }, 1400);
+  }
+
+  // SET MIN DATE FOR APPOINTMENT
+  const dateInput = document.getElementById('apptDate');
+  if (dateInput) {
+    const today = new Date();
+    today.setDate(today.getDate() + 1);
+    dateInput.min = today.toISOString().split('T')[0];
+  }
+</script>
+</body>
+</html>
